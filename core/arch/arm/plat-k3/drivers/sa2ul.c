@@ -80,11 +80,13 @@ unsigned long plat_get_aslr_seed(void)
 	unsigned long aslr = 0;
 	TEE_Result res = TEE_ERROR_GENERIC;
 
+	sa2ul_init();
+
 	res = hw_get_random_bytes_nolock(&aslr, sizeof(aslr));
 	if (res)
 		panic("ASLR failed to seed");
 
-	IMSG("ASLR seeded by TRNG");
+	IMSG("ASLR seeded by TRNG: aslr = %lu", aslr);
 
 	return aslr;
 }
